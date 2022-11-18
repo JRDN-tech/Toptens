@@ -2,4 +2,3 @@ Flask
 Flask-Session
 requests
 spotipy
-spotipy.oauth2
