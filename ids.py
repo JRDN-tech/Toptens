@@ -1,0 +1,3 @@
+# NOT FOR PUBLIC DISTRIBUTION.
+secret_id = 'ba5a6d77a9ec47d9be7d69f8253d53e8'
+client_id = '996b249bda5e486ba24864c802ba65f3'

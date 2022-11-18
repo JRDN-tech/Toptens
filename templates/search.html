@@ -1,0 +1,16 @@
+{% extends "index.html" %}
+
+{% block title %}
+Search For an Aritst
+{% endblock %}
+
+{% block main %}
+     <h1 class="whites">Search</h1>
+     <form action = "/search" method="POST">
+     <div class="mb-3">
+          <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="artist" name="artist" placeholder="Enter artist name" type="text">
+      </div>
+          <button class="btn btn-secondary" type="submit">Search</button>
+     </form>
+
+{% endblock %}

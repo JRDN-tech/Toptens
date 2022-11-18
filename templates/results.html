@@ -1,0 +1,87 @@
+{% extends "index.html" %}
+
+{% block title %}
+    Results
+{% endblock %}
+
+{% block main %}
+<script>
+function onlyPlayOneIn(container) {
+    container.addEventListener("play", function(event) {
+    audio_elements = container.getElementsByTagName("audio")
+      for(i=0; i < audio_elements.length; i++) {
+        audio_element = audio_elements[i];
+        if (audio_element !== event.target) {
+          audio_element.pause();
+        }
+      }
+    }, true);
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    onlyPlayOneIn(document.body);
+  });
+</script>
+<form action = "/success" method="POST">
+    <button class="btn btn-warning" type="submit">Create Playlist</button>
+</form>
+
+<form action="/search" method="GET">
+    <button class="btn btn-secondary" type="submit">Reset Artist</button>
+</form>
+<h4 class="whites">{{ name }}'s Top 10 songs</h4>
+<ul class="list-group list-group-horizontal">
+    <a class="list-group-item btn btn-secondary" role ="button" href="spotify:track:3sNVsP50132BTNlImLx70i">{{ song_names[0] }}
+        <video class="thumbnail" controls poster="{{ covers[0] }}"  name="media">
+            <source src="{{ previews[0] }}" type="audio/mpeg">
+        </video>
+    </a>
+    <a class="list-group-item btn btn-secondary" role ="button">{{ song_names[1] }}
+        <video class="thumbnail" controls poster="{{ covers[1] }}"  name="media">
+            <source src="{{ previews[1] }}" type="audio/mpeg">
+        </video>
+    </a>
+    <a class="list-group-item btn btn-secondary" role ="button">{{ song_names[2] }}
+        <video class="thumbnail" controls poster="{{ covers[2] }}"  name="media">
+            <source src="{{ previews[2] }}" type="audio/mpeg">
+        </video>
+    </a>
+    <a class="list-group-item btn btn-secondary" role ="button">{{ song_names[3] }}
+        <video class="thumbnail" controls poster="{{ covers[3] }}"  name="media">
+            <source src="{{ previews[3] }}" type="audio/mpeg">
+        </video>
+    </a>
+    <a class="list-group-item btn btn-secondary" role ="button">{{ song_names[4] }}
+        <video class="thumbnail" controls poster="{{ covers[4] }}"  name="media">
+            <source src="{{ previews[4] }}" type="audio/mpeg">
+        </video>
+    </a>
+</ul>
+<ul class="list-group list-group-horizontal">
+    <a class="list-group-item btn btn-secondary" role ="button">{{ song_names[5] }}
+        <video class="thumbnail" controls poster="{{ covers[5] }}"  name="media">
+            <source src="{{ previews[5] }}" type="audio/mpeg">
+        </video>
+    </a>
+    <a class="list-group-item btn btn-secondary" role ="button">{{ song_names[6] }}
+        <video class="thumbnail" controls poster="{{ covers[6] }}"  name="media">
+            <source src="{{ previews[6] }}" type="audio/mpeg">
+        </video>
+    </a>
+    <a class="list-group-item btn btn-secondary" role ="button">{{ song_names[7] }}
+        <video class="thumbnail" controls poster="{{ covers[7] }}"  name="media">
+            <source src="{{ previews[7] }}" type="audio/mpeg">
+        </video>
+    </a>
+    <a class="list-group-item btn btn-secondary" role ="button">{{ song_names[8] }}
+        <video class="thumbnail" controls poster="{{ covers[8] }}"  name="media">
+            <source src="{{ previews[8] }}" type="audio/mpeg">
+        </video>
+    </a>
+    <a class="list-group-item btn btn-secondary" role ="button">{{ song_names[9] }}
+        <video class="thumbnail" controls poster="{{ covers[9] }}"  name="media">
+            <source src="{{ previews[9] }}" type="audio/mpeg">
+        </video>
+    </a>
+</ul>
+{% endblock %}

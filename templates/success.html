@@ -1,0 +1,14 @@
+{% extends "index.html" %}
+
+{% block title %}
+    Results
+{% endblock %}
+
+{% block main %}
+
+
+<h1 class="whites">Playlist successfully created!</h1>
+<form action="/search" method="GET">
+    <button class="btn btn-secondary" type="submit">Find New Artist</button>
+</form>
+{% endblock %}
