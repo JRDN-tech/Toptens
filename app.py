@@ -4,7 +4,7 @@ import requests
 import time
 import spotipy #pip install spotipy --upgrade
 from ids import secret_id, client_id
-from spotipy.oauth2 import SpotifyOAuth
+from spotipy.oauth2 import SpotifyOAuth, SpotifyPKCE
 from helpers import create_playlist, get_songs, add_to_playlist, get_artist_uri, get_user_id, get_song_names, get_artist_name
 from flask import Flask, redirect, render_template, request, session, url_for
 from flask_session import Session
@@ -28,8 +28,8 @@ def index():
 #after logging in with spotify, get token info and redirect back to web app
 @app.route("/redirect")
 def redirect_page():
-    sp_oauth = create_spotify_oauth()
     session.clear()
+    sp_oauth = create_spotify_oauth2()
     code = request.args.get('code')
     token_info = sp_oauth.get_access_token(code)
     session["token_info"] = token_info
@@ -41,22 +41,30 @@ def login_page():
     if request.method == "GET":
         return render_template("login.html")
     else:
-        sp_oauth = create_spotify_oauth()
+        session.clear()
+        sp_oauth = create_spotify_oauth2()
         auth_url = sp_oauth.get_authorize_url()
         return redirect(auth_url)
 
-
 # authentication
+
 def create_spotify_oauth():
     return SpotifyOAuth(
         client_id = client_id,
         client_secret = secret_id,
         redirect_uri = url_for('redirect_page', _external=True),
-        scope="playlist-modify-public"
+        scope = "playlist-modify-public",
+        requests_session = True,
+        show_dialog = True
     )
-
-
-
+def create_spotify_oauth2():
+    return SpotifyPKCE(
+        client_id = client_id,
+        redirect_uri = url_for('redirect_page', _external=True),
+        scope = "playlist-modify-public",
+        username = "Test Account",
+        requests_session = True,
+    )
 
 @app.route("/search", methods=["GET","POST"])
 def search():
@@ -92,7 +100,7 @@ def get_token():
     now = int(time.time())
     is_expired = token_info['expires_at'] - now < 60
     if is_expired:
-        sp_oauth = create_spotify_oauth()
+        sp_oauth = create_spotify_oauth2()
         token_info['access_token'] = sp_oauth.refresh_access_token(token_info['refresh_token'])
     #essentially just returning session[token info] with 2 caveats
     return token_info['access_token']
@@ -130,6 +138,9 @@ def results():
 def success():
     token = get_token()
     user_id = get_user_id(token)
+    print()
+    print(user_id)
+    print()
     #create playlist and get ID
     uri = session["uri"]
     name = get_artist_name(uri, token)
