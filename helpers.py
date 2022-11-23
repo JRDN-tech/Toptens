@@ -36,6 +36,9 @@ def create_playlist(user_id, name, spotify_token):
     )
 
     response_json = response.json()
+    print("###########")
+    print("This terminal output comes from create_playlist")
+    print(response_json)
     #playlist ID
     return response_json["id"]
 
@@ -67,7 +70,7 @@ def get_songs(artist_uri, spotify_token):
             uris.append(response_json['tracks'][i]['uri'])
             previews.append(response_json['tracks'][i]["preview_url"])
             covers.append(response_json['tracks'][i]['album']['images'][0]['url'])
-    except IndexError:
+    except IndexError and KeyError:
         return None
 
     return uris, previews, covers
@@ -150,5 +153,4 @@ def get_artist_name(uri, spotify_token):
     response_json = response.json()
     name = response_json['name']
     return name
-
 
