@@ -70,7 +70,7 @@ def get_songs(artist_uri, spotify_token):
             uris.append(response_json['tracks'][i]['uri'])
             previews.append(response_json['tracks'][i]["preview_url"])
             covers.append(response_json['tracks'][i]['album']['images'][0]['url'])
-    except IndexError and KeyError:
+    except IndexError or KeyError:
         return None
 
     return uris, previews, covers
